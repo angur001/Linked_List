@@ -6,7 +6,8 @@ you can copy the linked list source and header file to your project and use them
 ```console
 $ make
 ``` 
-if you have access to make or if you can't use make :
+if you can't use make try this instead:
 ```console 
 $ gcc -Wall -g linkedList.c testList.c && ./a
-'''
+```
+ENJOY!!
