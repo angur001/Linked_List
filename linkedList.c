@@ -3,12 +3,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+//TODO : pop case 1 problem
+
 Node* createList(const int value) {
     Node *summit = (Node*)malloc(sizeof(Node));
     summit->value = value;
     summit->next = NULL;
     return summit;
 }
+
 
 Node* getTail(Node *node) {
     Node *ptr = node;
@@ -28,26 +31,48 @@ void append(Node *node, const int value) {
 }
 
 
-int pop(Node *node, const int value) {
-    Node *ptr = getTail(node);
-    int res = ptr->value;
-    free(ptr);
-    ptr = NULL;
+int pop(Node **node) {
+    Node **ptr = node;
+    int res;
+    while (((*ptr)->next) != NULL) {
+        ptr = &((*ptr)->next);
+    }
+    res = (*ptr)->value;
+    free((*ptr));
+    (*ptr) = NULL;
     return res;
+}
+
+int getLenght(Node *node) {
+    Node *ptr = node;
+    if (ptr == NULL) {
+        return 0;
+    }
+    int lenght = 1;
+    while (ptr->next != NULL) {
+        ptr = ptr->next;
+        lenght++;
+    }
+    return lenght;
 }
 
 
 void printList(Node *node) {
     Node *ptr = node;
-    printf("[");
+    if (ptr == NULL) {
+        printf("([], %d)", getLenght(node));
+        return;
+    }
+    printf("([");
     while (ptr->next != NULL) {
-        printf(" %d",ptr->value);
+        printf("%d ",ptr->value);
         ptr = ptr->next;
         printf(",");
     }
     printf(" %d",ptr->value);
-    printf("]\n");
+    printf("], %d)\n", getLenght(node));
 }
+
 
 // TODO
 void destroy(Node *node) {
@@ -56,5 +81,8 @@ void destroy(Node *node) {
         ptr = ptr->next;
     }
 
+}
 
+int peek(Node *node) {
+    return getTail(node)->value;
 }
